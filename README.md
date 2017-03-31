@@ -1,6 +1,13 @@
 # favorites-common-v2
 Модуль избранного для новых тем InSales (использующих common.v2.js)
 
+# Порядок подключения файлов
+```
+#= require favorites.helpers
+#= require favorites.master
+#= require favorites.init
+```
+
 # Дополнительные элементы
 
 Для работы модуля необходимо создать шаблон вывода избранного ```data-template-id="favorites-list"``` в сниппете templates
