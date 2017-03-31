@@ -46,7 +46,7 @@
     <% } %>  
 <% }) %>
 
-<form class="product-card {{ card_prefix }} {{cell_style}}" action="{{ cart_url }}" method="post" data-product-id="<%= product.id %>">
+<form class="product-card product-card-favorites cell-2 cell-3-md cell-4-sm cell-6-xs" action="/cart_items" method="post" data-product-id="<%= product.id %>">
   <div class="card-info">
     <div class="card-image">
       <%= labelsList %>
@@ -74,9 +74,7 @@
         </div>
     </div>
   </div>
-  {% if card_prefix == 'product-card-favorites' %}
   <a href="javascript:;" class="js-favorite-remove favorite-remove" data-favorite-delete="<%= product.id %>"><i class="fa fa-times-circle"></i> Удалить</a>
-  {% endif %}
 </form>
           	<% }) %>
         </div>
