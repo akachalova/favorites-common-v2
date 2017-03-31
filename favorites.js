@@ -53,10 +53,10 @@ InSales.Favorites = function( options ){
       hide_preloader();
         self.setList( response );
 
-        EventBus.publish('update_items:insales:favorites', self); //обновление полного списка избранного - вызываем только на странице избранного, чтобы не кидать лишний раз тяжелых запросов
+        EventBus.publish('update_items:insales:favorites', self); //обновление и вывод полного списка избранного - вызываем только на странице избранного, чтобы не кидать лишний раз тяжелых запросов
       });
     }
-    EventBus.publish('update_items_count:insales:favorites', self); //обновление только количества избарнных - для всех остальных страниц
+    EventBus.publish('update_items_count:insales:favorites', self); //обновление и вывод только количества избарнных - для всех остальных страниц
     
   };
 
@@ -224,7 +224,7 @@ var
 
 $(function(){
   EventBus.subscribe('update_items:insales:favorites', function( $data ){
-
+//обновление и вывод состава избранного
     if( $data.products.length == 0 ){
       $( '.js-favorite-notice' ).show();
     }else{
@@ -236,25 +236,20 @@ $(function(){
     }
   });
    EventBus.subscribe('update_items_count:insales:favorites', function( $data ){
+   	//обновление и вывод только количества избранных
 	if ($data.favorites.length > 0) {
-     $('.bottom-toolbar-favorites-link').removeClass('disabled');
       $('.js-favorites-amount').html($data.favorites.length);
       $.each($data.favorites, function(i, id){
-      	$('[data-favorite-add="' + id + '"]').addClass('is-active').html('<i class="fa fa-heart-o"></i> В избранном').attr('href', '/page/favorites').removeClass('js-favorite-add').removeAttr('data-favorite-add');
+      	$('[data-favorite-add="' + id + '"]').addClass('is-active');
       });
     }
   });
   EventBus.subscribe('add_items:insales:favories', function( $data ){
-    console.log( 'onFavorite_Add: ', $data );
-    $($data.jqObj[0]).addClass('is-active').html('<i class="fa fa-heart-o"></i> В избранном').attr('href', '/page/favorites').removeClass('js-favorite-add').removeAttr('data-favorite-add');
-	alertify.success('Товар добавлен в избранное');
-    
+  	// обработка добавления в избранное - кликнутому элементу добавляется класс is-active
+    $($data.jqObj[0]).addClass('is-active');
   });
  EventBus.subscribe('delete_items:insales:favorites', function( $data ){
-   $($data.jqObj[0]).parents('.product-card-favorites').fadeOut(300, function () {
-          $(this).remove();
-        });
+  //обработка удаления из избранного
 	 alertify.message('Товар удален из избранного');
-    console.log( 'onFavorite_Remove: ', $data );
   });
 });
