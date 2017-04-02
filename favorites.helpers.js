@@ -1,19 +1,4 @@
-// вспомогательная функция, точно определяет тип переменной, исходя из ее прототипа
-// свой маленький велосипедик для упрощения работы некоторых кусков кода
-type_of = function( $obj ){
-  var 
-    string = Object.prototype.toString.call( $obj ),
-    temp   = string.split( ' ' ),
-    type   = '';
 
-  if( $obj.jquery ){
-    type = 'jQuery';
-  } else {
-    type = temp[ 1 ].replace( ']', '' );
-  };
-
-  return type;
-};
 // разворачиваем массив продуктов в объект для более прозрачного доступа к информации
 convertProducts = function( array ){
   var
@@ -49,24 +34,14 @@ getProductList = function( id_array ){
   var
     end   = 0,
     paths = [],
-    ids   = [],
     temp;
 
   if( id_array == null ){
     id_array = [];
   };
 
-  // нормальизуем входной список
-  if( type_of( id_array ) == 'Object' ){
-    for( var id in id_array ) {
-      ids.push( id );
-    };
-  }else{
-    ids = id_array;
-  };
-
   // разбиваем входной массив на пачки по 25 элементов
-  paths = ids.reduce( function( p, c, i ){
+  paths = id_array.reduce( function( p, c, i ){
     if( i % 25 === 0 ){
       p.push([]);
     };
