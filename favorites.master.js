@@ -48,7 +48,7 @@ InSales.Favorites = function( options ){
     if (document.location.href.indexOf('favorites') > -1) {
       show_preloader();
     // забираем данные по товарам
-    InSales.getProductList( self.favorites )
+    getProductList( self.favorites )
       .then( function( response ){
       hide_preloader();
         self.setList( response );
